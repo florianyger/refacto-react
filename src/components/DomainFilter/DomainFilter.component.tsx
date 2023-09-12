@@ -1,17 +1,8 @@
 import React, {FC, useEffect, useState} from 'react';
-
-interface State {
-  countries: string[],
-  classifications: string[],
-  subClassifications: string[]
-}
-
-interface DomainFilterProps {
-  domains: string[]
-}
+import {DomainFilterProps, DomainFilterPropTypes, DomainFilterState} from "./DomainFilter.types";
 
 const DomainFilter: FC<DomainFilterProps> = ({ domains }) => {
-  const [state, setState] = useState<State>({
+  const [state, setState] = useState<DomainFilterState>({
     countries: [],
     classifications: [],
     subClassifications: []
@@ -60,5 +51,9 @@ const DomainFilter: FC<DomainFilterProps> = ({ domains }) => {
       </select>
     </>
 }
+
+DomainFilter.displayName = 'DomainFilter';
+
+DomainFilter.propTypes = DomainFilterPropTypes;
 
 export default DomainFilter
