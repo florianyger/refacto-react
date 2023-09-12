@@ -9,22 +9,22 @@ const DomainFilter: FC<DomainFilterProps> = ({ domains }) => {
   });
 
   useEffect((): void => {
-    for(let i = 0; i < domains.length; i++) {
-      if (state.countries.indexOf(domains[i].substring(0,2)) <= 0) {
-        state.countries.push(domains[i].substring(0,2))
+    domains.forEach((domain) => {
+      if (state.countries.indexOf(domain.substring(0,2)) <= 0) {
+        state.countries.push(domain.substring(0,2))
       }
-      state.classifications.push(domains[i].substring(3,5));
+      state.classifications.push(domain.substring(3,5));
       let flag = false;
       for(let j = 0; j < state.subClassifications.length; j++) {
-        if (state.subClassifications[j] == domains[i].substring(6)) {
+        if (state.subClassifications[j] == domain.substring(6)) {
           flag = true
           break;
         }
       }
       if (!flag) {
-        state.subClassifications.push(domains[i].substring(6));
+        state.subClassifications.push(domain.substring(6));
       }
-    }
+    })
 
     setState({
       ...state,
@@ -32,24 +32,17 @@ const DomainFilter: FC<DomainFilterProps> = ({ domains }) => {
     })
   }, []);
 
-
-    return <>
-      <select name="countries" multiple>
-        {state.countries.map(country => (
-          <option value={country} key={country}>{country}</option>
-        ))}
-      </select>
-      <select name="classifications" multiple>
-        {state.classifications.map(classification => (
-          <option value={classification} key={classification}>{classification}</option>
-        ))}
-      </select>
-      <select name="subClassifications" multiple>
-        {state.subClassifications.map(subClassification => (
-          <option value={subClassification} key={subClassification}>{subClassification}</option>
-        ))}
-      </select>
-    </>
+  return <>
+    {
+      Object.entries(state).map(([key, values]) =>
+        <select key={key} name={key} multiple>
+          {values.map((element: string) => (
+            <option value={element} key={element}>{element}</option>
+          ))}
+        </select>
+      )
+    }
+  </>
 }
 
 DomainFilter.displayName = 'DomainFilter';
