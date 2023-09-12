@@ -1,5 +1,6 @@
 import React, {FC, useEffect, useState} from 'react';
 import {DomainFilterProps, DomainFilterPropTypes, DomainFilterState} from "./DomainFilter.types";
+import MultipleSelect from "../MultipleSelect";
 
 const DomainFilter: FC<DomainFilterProps> = ({ domains }) => {
   const [state, setState] = useState<DomainFilterState>({
@@ -32,17 +33,7 @@ const DomainFilter: FC<DomainFilterProps> = ({ domains }) => {
     })
   }, []);
 
-  return <>
-    {
-      Object.entries(state).map(([key, values]) =>
-        <select key={key} name={key} multiple>
-          {values.map((element: string) => (
-            <option value={element} key={element}>{element}</option>
-          ))}
-        </select>
-      )
-    }
-  </>
+  return <MultipleSelect selectValues={state}/>
 }
 
 DomainFilter.displayName = 'DomainFilter';

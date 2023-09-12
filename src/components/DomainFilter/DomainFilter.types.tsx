@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 
-export interface DomainFilterState {
+export type DomainFilterState = {
   countries: string[],
   classifications: string[],
   subClassifications: string[]
